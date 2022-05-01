@@ -1,13 +1,13 @@
-import {Injectable,inject} from 'tsyringe'
+import {injectable,inject} from 'tsyringe'
 import fs from 'fs'
 import {parse} from "csv-parse"
-import { ICategoriesRepository } from '../../repositories/ICaregoryRepository'
+import { ICategoriesRepository } from '@modules/cars/repositories/ICaregoryRepository';
 
 interface IImportCategory {
   name: string;
   description: string;
 }
-@Injectable()
+@injectable()
 class ImportCategoryUseCase {
 
   constructor(

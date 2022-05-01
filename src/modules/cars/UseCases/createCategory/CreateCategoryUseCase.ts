@@ -1,6 +1,6 @@
+import { AppError } from "@errors/AppError";
+import { ICategoriesRepository } from "@modules/cars/repositories/ICaregoryRepository";
 import {inject, injectable} from "tsyringe"
-import { AppError } from "../../../../errors/AppError";
-import { ICategoriesRepository } from "../../repositories/ICaregoryRepository";
 
 interface IRequest {
     name: string;
