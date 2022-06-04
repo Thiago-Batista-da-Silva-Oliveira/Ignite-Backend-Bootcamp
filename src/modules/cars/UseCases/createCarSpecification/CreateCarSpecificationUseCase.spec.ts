@@ -23,9 +23,19 @@ describe("Create Car Specification", () => {
             fine_amount: 60,
             license_plate: "ABC-1234"
      })
-      const specifications_id = ["54321"]
-        await createCarSpecificationUseCase.execute({car_id: car.id, specifications_id})
-    })
+
+     const specification = await specificationsRepositoryInMemory.create({
+       description: "test",
+       name: "test"
+     })
+      const specifications_id = [specification.id]
+       const specificationCars=  await createCarSpecificationUseCase.execute
+        ({car_id: car.id, specifications_id})
+   
+        expect(specificationCars).toHaveProperty("specifications")
+        expect(specificationCars.specifications.length).toBe(1)
+   
+      })
 
     it("should not be able to add a new specification to a non existent car",async () => {
        expect(async () => {
