@@ -7,6 +7,8 @@ import { ISpecificationRepository } from '@modules/cars/repositories/ISpecificat
 import {container} from 'tsyringe'
 import { ICarsRepository } from '@modules/cars/repositories/ICarsRepository'
 import { CarsRepository } from '@modules/cars/infra/typeorm/repositories/CarsRepository'
+import { ICarsImagesRepository } from '@modules/cars/repositories/ICarsIimageRepository'
+import { CarsImagesRespository } from '@modules/cars/infra/typeorm/repositories/CarsImagesRepository'
 
 // ICategoriesRepository
 container.registerSingleton<ICategoriesRepository>(
@@ -27,4 +29,9 @@ container.registerSingleton<IUsersRepository> (
 container.registerSingleton<ICarsRepository> (
     "CarsRepository",
     CarsRepository
+ )
+
+ container.registerSingleton<ICarsImagesRepository> (
+    "CarsImagesRepository",
+    CarsImagesRespository
  )

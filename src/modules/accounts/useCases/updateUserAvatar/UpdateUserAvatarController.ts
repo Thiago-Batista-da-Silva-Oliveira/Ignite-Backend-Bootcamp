@@ -6,11 +6,11 @@ import { UpdateUserAvatarUseCase } from "./UpdateUserAvatarUseCase";
 class UpdateUserAvatarController {
       async handle(request:Request, response: Response){
           const {id} = request.user
-          const avatar_file = request.file.filename
+          const avatar = request.file.filename
 
           const updateUserAvatarUseCase = container.resolve(UpdateUserAvatarUseCase)
       
-          await updateUserAvatarUseCase.execute({user_id:id,avatar_file})
+          await updateUserAvatarUseCase.execute({user_id:id,avatar_file:avatar})
 
           return response.status(204).send()
       
