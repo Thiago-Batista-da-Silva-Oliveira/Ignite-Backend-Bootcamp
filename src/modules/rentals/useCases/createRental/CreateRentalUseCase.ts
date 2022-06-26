@@ -5,6 +5,7 @@ import { IDateProvider } from "@shared/container/providers/DateProvider/IDatePro
 import { AppError } from "@shared/errors/AppError";
 import dayjs from "dayjs";
 import { inject, injectable } from "tsyringe";
+import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
 
 
 interface IRequest {
@@ -19,7 +20,9 @@ class CreateRentalUseCase {
         @inject("RentalsRepository")
         private rentalsRepository: IRentalsRepository,
         @inject("DayjsDateProvider")
-        private dateProvider: IDateProvider
+        private dateProvider: IDateProvider,
+        @inject("CarsRepository")
+        private carsRepository: ICarsRepository
       
         ){}
     async execute ({user_id, expected_return_date,car_id}: IRequest):Promise<Rental> {
@@ -49,6 +52,8 @@ class CreateRentalUseCase {
              car_id,
              expected_return_date
         })
+
+        await this.carsRepository.updateAvailable(car_id, false)
 
         return rental
     }
