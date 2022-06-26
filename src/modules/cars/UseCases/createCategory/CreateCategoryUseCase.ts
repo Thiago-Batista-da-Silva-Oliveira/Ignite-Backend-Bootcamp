@@ -20,7 +20,6 @@ constructor(
     private categoriesRepository: ICategoriesRepository){
 }
  async execute({name, description}:IRequest): Promise<void> {
-     
     const categoryAlreadyExists = await this.categoriesRepository.findByName(name)
 
     if(categoryAlreadyExists) {
