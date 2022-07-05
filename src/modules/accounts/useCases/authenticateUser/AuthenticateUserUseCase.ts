@@ -36,13 +36,13 @@ class AuthenticateUserUseCase {
        const {expires_in_refresh_token,expires_in_token, secret_refresh_token, secret_token, expires_refresh_token_days} = auth
 
        if(!user){
-           throw new AppError("Email or password incorret")
+           throw new AppError("Email or password incorrect")
        }
 
        const passwordMatch = await compare(password, user.password)
 
        if(!passwordMatch) {
-        throw new AppError("Email or password incorret")
+        throw new AppError("Email or password incorrect")
        }
 
        const token = sign({}, secret_token, {
