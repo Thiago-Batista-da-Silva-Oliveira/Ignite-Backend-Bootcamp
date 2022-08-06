@@ -1,37 +1,38 @@
-import express, { NextFunction, Response,Request } from 'express'
-import "express-async-errors"
-import { router } from './routes'
-import swaggerUi from 'swagger-ui-express'
-import swaggerFile from '../../../swagger.json'
-import createConection from '@shared/infra/typeorm'
-import "../../container"
-import { AppError } from '@shared/errors/AppError'
+import express, { NextFunction, Response, Request } from "express";
+import "express-async-errors";
+import "dotenv/config";
+import { router } from "./routes";
+import swaggerUi from "swagger-ui-express";
+import swaggerFile from "../../../swagger.json";
+import createConection from "@shared/infra/typeorm";
+import "../../container";
+import { AppError } from "@shared/errors/AppError";
 
-createConection()
-const app = express()
+createConection();
+const app = express();
 
-app.use(express.json())
+app.use(express.json());
 
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile))
+app.use(router);
 
-
-app.use(router)
-
-app.use((err: Error, request:Request, response:Response, next:NextFunction) => {
-    if(err instanceof AppError){
-        return response.status(err.statusCode).json({
-            message: err.message
-        })
+app.use(
+  (err: Error, request: Request, response: Response, next: NextFunction) => {
+    if (err instanceof AppError) {
+      return response.status(err.statusCode).json({
+        message: err.message,
+      });
     }
     return response.status(500).json({
-        status: "error",
-        mesage: `Internal server error - ${err.message}`
-    })
-})
+      status: "error",
+      mesage: `Internal server error - ${err.message}`,
+    });
+  }
+);
 
-app.get('/', (req,res) => {
-    return res.json({message: "Hello World"})
-})
+app.get("/", (req, res) => {
+  return res.json({ message: "Hello World" });
+});
 
-export {app}
+export { app };
